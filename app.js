@@ -1,4 +1,5 @@
 const inquirer=require('inquirer');
+const { truncate } = require('lodash');
 // const fs = require('fs');
 // const generatePage = require('./src/page-template');
 
@@ -40,14 +41,19 @@ const promptUser=()=> {
             }
         },
         {
+            type: 'confirm',
+            name: 'confirmAbout',
+            message: 'Would you like to enter some information about yourself for an "About" section?',
+            default: true
+        },
+        {
             type: 'input',
             name: 'about',
-            message: 'Provide some information about yourself:(Required)',
-            validate: aboutInfo=> {
-                if (aboutInfo){
+            message: 'Provide some information about yourself:',
+            when: ({confirmAbout})=> {
+                if (confirmAbout){
                     return true;
                 } else {
-                    console.log('Please provide some infomration!')
                     return false;
                 }
             }
